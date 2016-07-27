@@ -1,6 +1,18 @@
-﻿var settings = require('../settings'),
-	Db = require('mongodb').Db,
-	Connection = require('mongodb').Connection,
-	Server = require('mongodb').Server;
+﻿var settings = require('../settings');
+var MongoClient = require('mongodb').MongoClient;
 
-module.exports = new Db(settings.db, new Server(setting.host, settings.port), {safe: true});
+var database = {};
+
+database.open = function(fn) {
+	MongoClient.connect(settings.url, function(err, db) {
+		if(fn !== 'undefined' && typeof fn == 'function') {
+			fn(err, db);
+		}
+		database.close = function() {
+			db.close();
+		}
+		console.log("Connectd correct");
+	});
+};
+
+module.exports = database;
