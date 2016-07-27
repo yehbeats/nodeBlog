@@ -7,11 +7,14 @@ npm install
 ```
 
 ##运行
+
+&emsp;&emsp;**保证本机MongoDB服务已经启动**
+
 ```
 node ./bin/www
 ```
 
-或者
+&emsp;&emsp;或者
 
 ```
 npm start
