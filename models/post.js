@@ -81,7 +81,7 @@ Post.get = function(name, callback) {
 				
 				//解析 markdown 为 html
 				docs.forEach(function(doc) {
-					doc.post = markdown.toHtml(doc.post);
+					doc.post = markdown.toHTML(doc.post);
 				});
 				callback(null, docs);//成功！以数组形式返回查询的结果
 			});
