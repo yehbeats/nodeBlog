@@ -1,4 +1,5 @@
 ﻿var mongodb = require('./db');
+var markdown = require('markdown').markdown;
 
 function Post(name, title, post) {
   this.name = name;
@@ -19,7 +20,7 @@ Post.prototype.save = function(callback) {
 		day : date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate(),
 		minute : date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + " " + 
 		date.getHours() + ":" + (date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()) 
-	}
+	};
 	//要存入数据库的文档
 	var post = {
 		name: this.name,
@@ -77,6 +78,11 @@ Post.get = function(name, callback) {
 				if (err) {
 				  return callback(err);//失败！返回 err
 				}
+				
+				//解析 markdown 为 html
+				docs.forEach(function(doc) {
+					doc.post = markdown.toHtml(doc.post);
+				});
 				callback(null, docs);//成功！以数组形式返回查询的结果
 			});
 		});
